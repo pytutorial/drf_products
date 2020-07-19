@@ -1,0 +1,43 @@
+{% extends '../base.html' %}
+{%block navbar %}
+ {% with page=2 %}
+   {{block.super}}
+ {% endwith %}
+{%endblock%}
+{%block content%}
+<div class="container pt-3">
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="text-center" style="width: 10%;">STT</th>
+        <th class="text-center" style="width: 20%;">Mã</th>
+        <th  style="width: 20%;">Tên</th>
+        <th class="text-center" style="width: 30%;">Ảnh</th>
+        <th class="text-center" style="width: 20%;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for prod in productList %}
+      <tr>
+        <td class="text-center">{{forloop.counter}}</td>
+        <td class="text-center">{{prod.code}}</td>
+        <td>{{prod.name}}</td>
+        <td class="text-center"><img src='/{{prod.image}}' style="max-height: 150px;"></td>
+        <td>
+          <a class="btn btn-sm btn-secondary" href="/edit_product/{{prod.id}}">Chỉnh sửa</a>
+          <a class="btn btn-sm btn-danger" href="javascript:deleteItem({{prod.id}})">Xóa</a>
+        </td>
+      </tr>
+      {%endfor%}
+    </tbody>  
+  </table>
+  <a class="btn btn-primary" href="{% url 'add-product' %}">Thêm sản phẩm</a>
+</div>
+<script>
+  function deleteItem(id) {
+    if(confirm('Bạn có muốn xóa')) {
+      location.href = '/delete_product/' + id;
+    }
+  }
+</script>
+{%endblock%}

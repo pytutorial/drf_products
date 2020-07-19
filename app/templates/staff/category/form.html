@@ -1,0 +1,24 @@
+{% extends '../base.html' %}
+{%block navbar %}
+ {% with page=1 %}
+   {{block.super}}
+ {% endwith %}
+{%endblock%}
+{%block content%}
+<div class="container mt-3">
+  <form method="POST">
+    {%csrf_token%}
+    <table class="table table-form">
+      {{form}}
+    </table>
+    <button class="btn btn-primary" type="submit">Lưu lại</button>
+    <a class="btn btn-secondary" href="/staff">Quay lại</a>
+  </form>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $('.table-form input').addClass('form-control');
+  });
+</script>
+{%endblock%}
