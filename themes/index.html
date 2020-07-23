@@ -34,96 +34,17 @@
           <label class='label-title'>Không tìm thấy sản phẩm</label>
         </div>
         <ul class="list-unstyled row">
-          <li class="list-item col-sm-4 mt-3">
+          <li v-for="p in productList" class="list-item col-sm-4 mt-3">
             <div class='item-container'>
               <a href="product.html" class='product-item'>
-                <img src="images/ASUS_0008.jpg" class='product-image'>
+                <img :src="`http://localhost:8000/${p.image}`" class='product-image'>
                 <div class="item-info">
                   <div>
-                    <span class='product-name'>Asus TP412FA-EC121T</span>
+                    <span class='product-name'>{{p.name}}</span>
                   </div>
                   <div>
-                    <span class='price-title'>Giá bán :</span> <span class='price'>13.599.000 ₫</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </li>
-
-          <li class="list-item col-sm-4 mt-3">
-            <div class='item-container'>
-              <a href="product.html" class='product-item'>
-                <img src="images/ASUS_0008.jpg" class='product-image'>
-                <div class="item-info">
-                  <div>
-                    <span class='product-name'>Asus TP412FA-EC121T</span>
-                  </div>
-                  <div>
-                    <span class='price-title'>Giá bán :</span> <span class='price'>13.599.000 ₫</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </li>
-
-          <li class="list-item col-sm-4 mt-3">
-            <div class='item-container'>
-              <a href="product.html" class='product-item'>
-                <img src="images/ASUS_0008.jpg" class='product-image'>
-                <div class="item-info">
-                  <div>
-                    <span class='product-name'>Asus TP412FA-EC121T</span>
-                  </div>
-                  <div>
-                    <span class='price-title'>Giá bán :</span> <span class='price'>13.599.000 ₫</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </li>
-
-          <li class="list-item col-sm-4 mt-3">
-            <div class='item-container'>
-              <a href="product.html" class='product-item'>
-                <img src="images/ASUS_0008.jpg" class='product-image'>
-                <div class="item-info">
-                  <div>
-                    <span class='product-name'>Asus TP412FA-EC121T</span>
-                  </div>
-                  <div>
-                    <span class='price-title'>Giá bán :</span> <span class='price'>13.599.000 ₫</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </li>
-
-          <li class="list-item col-sm-4 mt-3">
-            <div class='item-container'>
-              <a href="product.html" class='product-item'>
-                <img src="images/ASUS_0008.jpg" class='product-image'>
-                <div class="item-info">
-                  <div>
-                    <span class='product-name'>Asus TP412FA-EC121T</span>
-                  </div>
-                  <div>
-                    <span class='price-title'>Giá bán :</span> <span class='price'>13.599.000 ₫</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </li>
-
-          <li class="list-item col-sm-4 mt-3">
-            <div class='item-container'>
-              <a href="product.html" class='product-item'>
-                <img src="images/ASUS_0008.jpg" class='product-image'>
-                <div class="item-info">
-                  <div>
-                    <span class='product-name'>Asus TP412FA-EC121T</span>
-                  </div>
-                  <div>
-                    <span class='price-title'>Giá bán :</span> <span class='price'>13.599.000 ₫</span>
+                    <span class='price-title'>Giá bán :</span>
+                    <span class='price'>{{p.price}} ₫</span>
                   </div>
                 </div>
               </a>
@@ -180,7 +101,6 @@
     created: async function() {
       var result = await this.get('/search_product');
       this.productList = result.productList;
-      alert(this.productList.length);
     }
   });
 </script>
