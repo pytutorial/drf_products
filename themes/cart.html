@@ -52,7 +52,7 @@
 
     <div class="row">
       <div class='col-3 offset-9'>
-        <h5>Tổng : 13.590.000 ₫</h5>
+        <h5>Tổng : {{total}} ₫</h5>
       </div>
     </div>
 
@@ -67,6 +67,14 @@
     data: {
       items: [],
       baseURL: 'http://localhost:8000/api',
+    },
+    computed : {
+      total() {
+        var s = 0;
+        for(var i = 0; i < this.items.length;i++)
+          s += this.items[i].qty * this.items[i].product.price;
+        return s;
+      }
     },
     created: async function() {
       var json = localStorage.getItem('itemList');
