@@ -69,7 +69,8 @@
       baseURL: 'http://localhost:8000/api',
     },
     created: async function() {
-      this.items = localStorage.getItem('items') || [];
+      var json = localStorage.getItem('itemList');
+      if(json) this.items = JSON.parse(json);
 
       var currentURL = location.href;
       var token = '?id=';
@@ -87,7 +88,7 @@
           }
         }
       }
-      localStorage.setItem('items', this.items);
+      localStorage.setItem('itemList', JSON.stringify(this.items));
       console.log(this.items);
     }
   })
