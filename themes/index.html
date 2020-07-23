@@ -53,34 +53,33 @@
         </ul>
       </div>
       <div class="col-3">
-        <div class="mt-5">
-          <label class='label-title'>Tên sản phẩm</label>
-          <input class="form-control" placeholder="Nhập tên sản phẩm">
-        </div>
-
-        <div class="mt-4">
-          <label class='label-title'>Nhóm sản phẩm</label>
-          <select class="form-control">
-            <option value="">Tất cả</option>
-            <option value="ACER">Acer</option>
-            <option value="ASUS">Asus</option>
-            <option value="LENOVO">Lenovo</option>
-          </select>
-        </div>
-
-        <div class="mt-4">
-          <label class='label-title'>Mức giá</label>
-          <select class="form-control">
-            <option value="">Tất cả</option>
-            <option value="1">Dưới 10 triệu</option>
-            <option value="2">Từ 10 đến 15 triệu</option>
-            <option value="3">Từ 15 đến 20 triệu</option>
-            <option value="4">Trên 20 triệu</option>
-          </select>
-        </div>
-
-        <br>
-        <button class="btn btn-primary">Tìm kiếm</button>
+        <form @submit.prevent="searchProduct()">
+          <div class="mt-5">
+            <label class='label-title'>Tên sản phẩm</label>
+            <input class="form-control" placeholder="Nhập tên sản phẩm">
+          </div>
+          <div class="mt-4">
+            <label class='label-title'>Nhóm sản phẩm</label>
+            <select class="form-control">
+              <option value="">Tất cả</option>
+              <option v-for="c in categoryList" :value="c.id">
+                {{c.name}}
+              </option>
+            </select>
+          </div>
+          <div class="mt-4">
+            <label class='label-title'>Mức giá</label>
+            <select class="form-control">
+              <option value="">Tất cả</option>
+              <option value="1">Dưới 10 triệu</option>
+              <option value="2">Từ 10 đến 15 triệu</option>
+              <option value="3">Từ 15 đến 20 triệu</option>
+              <option value="4">Trên 20 triệu</option>
+            </select>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        </form>
       </div>
     </div>
   </div>
@@ -90,17 +89,26 @@
     el: '#app',
     data :{
       productList: [],
-      API_URL : 'http://localhost:8000/api'
+      categoryList:[],
+      API_URL : 'http://localhost:8000/api',
+      productName: '',
+      categoryId:'',
+      priceRange:'',
     },
     methods: {
       get: async function(uri) {
         var resp = await fetch(this.API_URL + uri);
         return resp.json();
+      },
+      searchProduct: async function() {
+        alert('Search');
       }
     },
     created: async function() {
       var result = await this.get('/search_product');
-      this.productList = result.productList;
+      this.productList = result.productList;      
+      result = await this.get('/get_category_list');
+      this.categoryList = result.categoryList;     
     }
   });
 </script>
