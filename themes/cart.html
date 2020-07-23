@@ -77,8 +77,17 @@
       if(pos >= 0) {
         var id = currentURL.substring(pos + token.length);
         var result = await this.get('/product_detail/' + id);
-        alert(result.product.name);    
+        var product = result.product;
+        if(product) {
+          var item = this.items.find(x => x.product.id == product.id);
+          if(item) {
+            item.qty += 1;
+          }else{
+            this.items.push({qty:1, product:product});
+          }
+        }
       }
+      console.log(this.items);
     }
   })
 </script>
