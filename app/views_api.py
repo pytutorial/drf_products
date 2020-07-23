@@ -27,3 +27,14 @@ def getCategoryList(request):
     categoryList = Category.objects.all()    
     data = CategorySerializer(categoryList, many=True).data
     return Response({'categoryList': data})
+
+@api_view(['GET'])
+def getProductDetail(request, pk):
+    product = Product.objects.filter(pk=pk).first()
+    if product:
+        data = ProductSerializer(product).data
+        return Response({'product' : data})
+    else:
+        return Response({'error': 'Not found'})
+
+

@@ -4,4 +4,5 @@ urlpatterns = [
     path('hello', hello),
     path('get_category_list', getCategoryList),
     path('search_product', searchProduct),
+    path('product_detail/<pk>', getProductDetail),
 ]

@@ -56,11 +56,11 @@
         <form @submit.prevent="searchProduct()">
           <div class="mt-5">
             <label class='label-title'>Tên sản phẩm</label>
-            <input class="form-control" placeholder="Nhập tên sản phẩm">
+            <input v-model="productName" class="form-control" placeholder="Nhập tên sản phẩm">
           </div>
           <div class="mt-4">
             <label class='label-title'>Nhóm sản phẩm</label>
-            <select class="form-control">
+            <select v-model="categoryId" class="form-control">
               <option value="">Tất cả</option>
               <option v-for="c in categoryList" :value="c.id">
                 {{c.name}}
@@ -69,7 +69,7 @@
           </div>
           <div class="mt-4">
             <label class='label-title'>Mức giá</label>
-            <select class="form-control">
+            <select v-model="priceRange" class="form-control">
               <option value="">Tất cả</option>
               <option value="1">Dưới 10 triệu</option>
               <option value="2">Từ 10 đến 15 triệu</option>
@@ -101,7 +101,11 @@
         return resp.json();
       },
       searchProduct: async function() {
-        alert('Search');
+        var uri = `/search_product?product_name=${this.productName}`
+                        + `&category_id=${this.categoryId}`
+                        + `&price_range=${this.priceRange}`;
+        var result = await this.get(uri);
+        this.productList = result.productList;
       }
     },
     created: async function() {
