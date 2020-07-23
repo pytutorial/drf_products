@@ -36,7 +36,7 @@
         <ul class="list-unstyled row">
           <li v-for="p in productList" class="list-item col-sm-4 mt-3">
             <div class='item-container'>
-              <a href="product.html" class='product-item'>
+              <a :href="`product.html?id=${p.id}`" class='product-item'>
                 <img :src="`http://localhost:8000/${p.image}`" class='product-image'>
                 <div class="item-info">
                   <div>
