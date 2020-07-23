@@ -30,40 +30,20 @@
   <div class='container'>
     <div class="row">
       <div class="col-6">
-        <image class='product-detail-image' src="images/ASUS_0008.jpg">
+        <image class='product-detail-image' :src="`http://localhost:8000/${product.image}`">
       </div>
 
       <div class="col-6 mt-5">
-        <div class='product-detail-title'>Asus TP412FA-EC121T</div>
+        <div class='product-detail-title'>{{product.name}}</div>
         <br>
         <table class="table">
           <tr>
-            <td>Hãng sản xuất:</td>
-            <td>Asus</td>
-          </tr>
-          <tr>
-            <td>Loại CPU:</td>
-            <td>i3 8145u</td>
-          </tr>
-          <tr>
-            <td>Kích thước RAM:</td>
-            <td>4GB</td>
-          </tr>
-          <tr>
-            <td>Kích thước ổ cứng:</td>
-            <td>256GB (SSD)</td>
-          </tr>
-          <tr>
-            <td>Kích thước màn hình:</td>
-            <td>14.0 inch</td>
-          </tr>
-          <tr>
-            <td>Khối lượng:</td>
-            <td>1.8 kg</td>
-          </tr>
+            <td>Nhóm sản phẩm:</td>
+            <td></td>
+          </tr>          
           <tr>
             <td>Giá bán:</td>
-            <td><b>13.599.000 ₫</b></td>
+            <td><b>{{product.price}} ₫</b></td>
           </tr>
         </table>
         <br>
@@ -78,6 +58,7 @@
   new Vue({
     el: '#app',
     data: {
+      baseURL: 'http://localhost:8000/api',
       product: {}
     },
     created: async function() {
@@ -86,7 +67,8 @@
       var pos = currentURL.lastIndexOf(token);
       if(pos >= 0) {
         var id = currentURL.substring(pos + token.length);
-        alert('id:' + id);
+        var result = await this.get('/product_detail/' + id);
+        this.product = result.product;       
       }
     }
   })

@@ -1,5 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from .models import *
+from rest_framework.serializers import CharField
+
 class CategorySerializer(ModelSerializer):
     class Meta:
         model = Category
@@ -8,4 +10,6 @@ class CategorySerializer(ModelSerializer):
 class ProductSerializer(ModelSerializer):
     class Meta:
         model = Product
-        fields = '__all__'        
+        fields = '__all__' 
+        
+    categoryName = CharField(source='category.name', default='')       
