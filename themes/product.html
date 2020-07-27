@@ -20,7 +20,7 @@
 
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="cart.html">Giỏ hàng : 0 ₫</a>
+            <a v-if="total" class="nav-link" href="cart.html">Giỏ hàng : {{total}} ₫</a>
           </li>
         </ul>
       </nav>
@@ -59,7 +59,8 @@
     el: '#app',
     data: {
       baseURL: 'http://localhost:8000/api',
-      product: {}
+      product: {},
+      total: ''
     },
     created: async function() {
       var currentURL = location.href;
@@ -70,6 +71,7 @@
         var result = await this.get('/product_detail/' + id);
         this.product = result.product;       
       }
+      this.total = localStorage.getItem('total');
     }
   })
 </script>

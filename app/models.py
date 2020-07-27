@@ -25,7 +25,13 @@ class Order(models.Model):
     fullname = models.CharField(max_length=100)
     phone = models.CharField(max_length=30)
     address = models.CharField(max_length=300)
-    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    #product = models.ForeignKey(Product, on_delete=models.PROTECT)
     orderDate = models.DateTimeField()
     deliverDate = models.DateTimeField(null=True)
     status = models.IntegerField()
+
+class Orderline(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    price = models.IntegerField()
+    qty = models.IntegerField()    

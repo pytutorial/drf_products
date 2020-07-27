@@ -20,7 +20,7 @@
 
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="cart.html">Giỏ hàng : 0 ₫</a>
+            <a v-if="total" class="nav-link" href="cart.html">Giỏ hàng : {{total}} ₫</a>
           </li>
         </ul>
       </nav>
@@ -94,6 +94,7 @@
       productName: '',
       categoryId:'',
       priceRange:'',
+      total: ''
     },
     methods: {
       get: async function(uri) {
@@ -112,7 +113,8 @@
       var result = await this.get('/search_product');
       this.productList = result.productList;      
       result = await this.get('/get_category_list');
-      this.categoryList = result.categoryList;     
+      this.categoryList = result.categoryList; 
+      this.total = localStorage.getItem('total');    
     }
   });
 </script>

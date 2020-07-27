@@ -1,9 +1,10 @@
 <meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/main.js"></script>
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/main.css">
 
-<div class='container pt-3'>
+<div id="app" class='container pt-3'>
   <form method="POST" novalidate>
     <h4>Đặt mua hàng trực tuyến</h4>
     <table class="table table-form">
@@ -13,16 +14,30 @@
         </th>
       </tr>
       <tr>
-        <th>Sản phẩm:</th>
-        <td>
-          <img src="images/ASUS_0008.jpg" style="max-height: 100px;">
-          <br>
-          <span>Asus TP412FA-EC121T</span>
+        <td colspan="2">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Tên</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Tổng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in items">
+                <td>{{item.product.name}}</td>
+                <td>{{item.qty}}</td>
+                <td>{{item.product.price}}</td>
+                <td>{{item.qty*item.product.price}}</td>
+              </tr>
+            </tbody>
+          </table>
         </td>
       </tr>
       <tr>
-        <th>Giá:</th>
-        <td>13.599.000 ₫</td>
+        <th>Tổng:</th>
+        <td>{{total}} ₫</td>
       </tr>
 
       <tr>
@@ -31,18 +46,45 @@
         </th>
       </tr>
       <tr>
-		<th>Họ và tên:</th>
-		<td><input class="form-control"></td>
-	  </tr>
-	  <tr>
-		<th>Số điện thoại:</th>
-		<td><input class="form-control"></td>
-	  </tr>
-	  <tr>
-		<th>Địa chỉ:</th>
-		<td><input class="form-control"></td>
-	  </tr>
+        <th>Họ và tên:</th>
+        <td><input class="form-control" v-model="customer.fullname"></td>
+      </tr>
+      <tr>
+        <th>Số điện thoại:</th>
+        <td><input class="form-control" v-model="customer.phone"></td>
+      </tr>
+      <tr>
+        <th>Địa chỉ:</th>
+        <td><input class="form-control" v-model="customer.address"></td>
+      </tr>
     </table>
-    <a href='purchase_confirmation.html' class="btn btn-primary">Tiếp tục</a>
+    <button v-on:click="proceed()" type="button" class="btn btn-primary">
+      Tiếp tục
+    </button>
   </form>
 </div>
+<script>
+  new Vue({
+    el: "#app",
+    data: {
+      items: [],
+      customer: {
+        fullname: '', address: '', phone: ''
+      },
+      total: ''
+    },
+    methods: {
+      proceed: function () {
+        localStorage.setItem('customer', JSON.stringify(this.customer));
+        location.href = 'purchase_confirmation.html';
+      }
+    },
+    created: function () {
+      this.items = JSON.parse(localStorage.getItem('itemList'));
+      if (localStorage.getItem('customer')) {
+        this.customer = JSON.parse(localStorage.getItem('customer'));
+      }
+      this.total = localStorage.getItem('total');
+    }
+  })
+</script>

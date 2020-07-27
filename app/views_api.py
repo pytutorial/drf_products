@@ -8,6 +8,7 @@ def hello(request):
 from .models import *
 from .serializers import *
 from .views_user import findProducts
+from datetime import datetime
 
 @api_view(['GET'])
 def searchProduct(request):
@@ -37,4 +38,30 @@ def getProductDetail(request, pk):
     else:
         return Response({'error': 'Not found'})
 
+@api_view(['POST'])
+def orderProducts(request):
+    try:
+        customer = request.data.get('customer', {})
+        items = request.data.get('items', [])
+
+        order = Order()
+        order.fullname = customer.get('fullname')
+        order.phone = customer.get('phone')
+        order.address = customer.get('address')
+        order.orderDate = datetime.now()
+        order.status = Order.Status.PENDING
+        order.save()
+        print(order)
+
+        for item in items:
+            orderline = Orderline()
+            orderline.order = order
+            orderline.product = Product(id=item.get('productId'))
+            orderline.price = item.get('price')
+            orderline.qty = item.get('qty')
+            orderline.save()
+
+        return Response({'success': True})
+    except Exception as e:
+        return Response({'success': False, 'error': str(e)})
 
